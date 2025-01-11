@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kisiler_uygulamasi/KisiDetaySayfa.dart';
 import 'package:kisiler_uygulamasi/KisiKayitSayfa.dart';
 import 'package:kisiler_uygulamasi/Kisiler.dart';
+import 'package:kisiler_uygulamasi/Kisilerdao.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,21 +36,17 @@ class _AnasayfaState extends State<Anasayfa> {
   String aramaKelimesi = "";
 
   Future<List<Kisiler>> tumKisileriGoster() async {
-    var kisilerListesi = <Kisiler>[];
+    var kisilerListesi = await Kisilerdao().tumKisiler();
+    return kisilerListesi;
+  }
 
-    var k1 = Kisiler(1, "Ahmet", "99999999");
-    var k2 = Kisiler(2, "Mehmet", "33333333");
-    var k3 = Kisiler(3, "Zeynep", "11111111");
-
-    kisilerListesi.add(k1);
-    kisilerListesi.add(k2);
-    kisilerListesi.add(k3);
-
+  Future<List<Kisiler>> aramaYap(String aramaKelimesi) async {
+    var kisilerListesi = await Kisilerdao().kisiArama(aramaKelimesi);
     return kisilerListesi;
   }
 
   Future<void> sil(int kisi_id) async {
-    print("$kisi_id silindi");
+    await Kisilerdao().kisiSil(kisi_id);
     setState(() {
     });
   }
@@ -102,7 +99,7 @@ class _AnasayfaState extends State<Anasayfa> {
       body: WillPopScope(
         onWillPop: uygulamayiKapat,
         child: FutureBuilder<List<Kisiler>>(
-          future: tumKisileriGoster(),
+          future: aramaYapiliyorMu ? aramaYap(aramaKelimesi) : tumKisileriGoster(),
           builder: (context,snapshot){
             if(snapshot.hasData){
               var kisilerListesi = snapshot.data;

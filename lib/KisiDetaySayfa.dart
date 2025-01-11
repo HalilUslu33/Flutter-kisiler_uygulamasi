@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kisiler_uygulamasi/Kisiler.dart';
+import 'package:kisiler_uygulamasi/Kisilerdao.dart';
 import 'package:kisiler_uygulamasi/main.dart';
 
 class KisiDetaySayfa extends StatefulWidget {
@@ -16,7 +17,7 @@ class _KisiDetaySayfaState extends State<KisiDetaySayfa> {
   var tfKisiTel = TextEditingController();
 
   Future<void> guncelle(int kisi_id,String kisi_ad,String kisi_tel) async {
-    print("$kisi_ad - $kisi_tel güncellendi");
+    await Kisilerdao().kisiGuncelle(kisi_id, kisi_ad, kisi_tel);
     Navigator.push(context, MaterialPageRoute(builder: (context) => Anasayfa()));
   }
 

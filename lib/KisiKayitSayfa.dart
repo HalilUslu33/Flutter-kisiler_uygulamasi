@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kisiler_uygulamasi/Kisilerdao.dart';
 import 'package:kisiler_uygulamasi/main.dart';
 
 class KisiKayitSayfa extends StatefulWidget {
@@ -12,7 +13,7 @@ class _KisiKayitSayfaState extends State<KisiKayitSayfa> {
   var tfKisiTel = TextEditingController();
 
   Future<void> kayit(String kisi_ad,String kisi_tel) async {
-    print("$kisi_ad - $kisi_tel kayıt edildi");
+    await Kisilerdao().kisiEkle(kisi_ad, kisi_tel);
     Navigator.push(context, MaterialPageRoute(builder: (context) => Anasayfa()));
   }
 
